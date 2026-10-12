@@ -5,6 +5,7 @@ import glob
 import os
 from threading import Thread
 from emailing import send_email
+from datetime import datetime
 
 # Thêm cv2.CAP_DSHOW để Windows mở camera nhanh và không bị treo
 video = cv2.VideoCapture(0)
@@ -13,6 +14,7 @@ first_frame = None
 status_list = []
 count = 1
 current_images = []
+current_day = datetime.now().day
 
 while True:
     status = 0
@@ -62,6 +64,13 @@ while True:
             email_thread.daemon = True
             email_thread.start()
         current_images = []
+
+    # --- KIỂM TRA RESET VÀO 12H ĐÊM KHI KHÔNG CÓ KHÁCH ---
+    today = datetime.now().day
+    if today != current_day and status == 0: #status = 0 means no customer
+        count = 1
+        current_day = today
+        print(f"[{datetime.now().strftime('%d/%m/%Y %H:%M:%S')}] Đã sang ngày mới, reset bộ đếm count = 1!")
         
         # Show the bounding box view in a separate window
     cv2.imshow("Video", frame)
