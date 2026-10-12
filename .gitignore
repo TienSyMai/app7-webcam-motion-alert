@@ -1,0 +1,10 @@
+# Môi trường ảo & cache Python
+.venv/
+__pycache__/
+
+# Biến môi trường & thông tin bí mật
+.env
+
+# Ảnh chụp từ camera (giữ lại thư mục bằng .gitkeep)
+images/*
+!images/.gitkeep
